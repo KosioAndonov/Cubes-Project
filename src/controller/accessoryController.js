@@ -12,7 +12,7 @@ const {name, description, imageUrl} = req.body;
 await accessoryManager.create({name, description, imageUrl});
 
 res.redirect('/');
-
 })
+
 
 module.exports = router;
