@@ -3,7 +3,7 @@ const cubeManager = require('../manager/cubeManager');
 const accessoriesManager = require('../manager/accessoryManager');
 
 router.get('/create', (req, res) => {
-    res.render('create');
+    res.render('cube/create');
 });
 
 router.post('/create', async (req, res) => {
@@ -24,12 +24,13 @@ router.post('/create', async (req, res) => {
 
 router.get('/:cubeId/details', async (req, res) => {
     const cube = await cubeManager.getOneWithAccessories(req.params.cubeId).lean();
-    res.render('detailsPage', {cube});
+    res.render('cube/detailsPage', {cube});
 });
 
 router.get('/attach-accessory/:cubeId', async (req,res)=>{
     const cube = await cubeManager.getOneWithAccessories(req.params.cubeId).lean();
     const accessories = await accessoriesManager.getOthers(cube.accessories).lean();
+    console.log(cube, accessories);
     const hasAccessories = accessories.length > 0;
     res.render('accessory/attachAccessory',{cube, accessories,hasAccessories})
 });
@@ -37,6 +38,7 @@ router.get('/attach-accessory/:cubeId', async (req,res)=>{
 router.post('/attach-accessory/:cubeId', async (req,res)=>{
     const {accessory: accessoryId} = req.body;
     const cubeId = req.params.cubeId;
+    
     
     await cubeManager.attachAccessory(cubeId, accessoryId);
 

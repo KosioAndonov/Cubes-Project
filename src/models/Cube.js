@@ -7,7 +7,11 @@ const cubeSchema = new mongoose.Schema({
     difficultyLevel: Number,
     accessories: [{
         type: mongoose.Types.ObjectId,
-        ref: 'Accessory'
+        ref: 'Accessory',
+    }],
+    owner: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
     }],
 });
 
